@@ -24,7 +24,7 @@ set_include_path( get_include_path() . PATH_SEPARATOR . "./lib");
 require "Helpers.php";
 require "Propagator.php";
 
-error_reporting(E_ALL);
+error_reporting(E_WARNING);
 $action = (isset($_REQUEST['action']) && !empty($_REQUEST['action'])) ? $_REQUEST['action'] : 'index';
 
 $conf = array();
