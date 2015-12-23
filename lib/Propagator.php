@@ -226,7 +226,10 @@ class Propagator {
     	$data['deployment_environments'] = get_var('deployment_environment');
     	$data['database_role_id'] = get_var('database_role_id');
     	$data['script_default_schema'] = get_var('script_default_schema');
-    	$data['script_sql_code'] = get_var('script_sql_code');
+
+        // Really bad fix to remove escape chars
+        // We don't know where they are getting injected yet
+    	$data['script_sql_code'] = preg_replace('/\\\\/','',get_var('script_sql_code'));
     	$data['script_description'] = get_var('script_description');
     
     	try
