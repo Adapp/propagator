@@ -12,22 +12,22 @@
 
 
 $conf['db'] = array(
-	'host'	=> '127.0.0.1',
-	'port'	=> 5532,
+	'host'	=> getenv("MYSQL_PORT_3306_TCP_ADDR"),
+	'port'	=> getenv("MYSQL_PORT_3306_TCP_PORT"),
 	'db'	=> 'propagator',
-	'user'	=> 'msandbox',
-	'password' => 'msandbox'
+	'user'	=> 'rw_ops_prop',
+	'password' => 'propagator'
 );
 
 $conf['default_action'] = 'about';
 
 // Default user. Propagator is assumed to work with ldap, so credentials are passed to PHP via htaccess.
 // The only alternative to ldap at this stage is to simply auto-assign a login
-$conf['default_login'] = 'gromit';
+$conf['default_login'] = 'blake';
 
 //
 // Accounts with DBA privileges: mark deployments as "manually deployed", restart deployments, view topologies
-$conf['dbas'] = array('gromit', 'penguin');
+$conf['dbas'] = array('blake', 'mike');
 $conf['blocked'] = array('badboy');
 $conf['restrict_credentials_input_to_dbas'] = true;
 
@@ -44,10 +44,10 @@ $conf['instance_type_deployment'] = array(
 // For a DBA user it is meaningless. For other users this means they will need to make a request
 // to a DBA.
 // When commented or when array is empty two-step approval is inactive.
-//$conf['two_step_approval_environments'] = array(
-//		'production', 
-//		'build'
-//);
+$conf['two_step_approval_environments'] = array(
+		'production', 
+		'build'
+);
 
 //
 // Should script deployment history be visible to all users? If 'false' then only to 'dbas' group (see above);
@@ -81,7 +81,7 @@ $conf['instance_topology_pattern_colorify'] = array (
 //    ),
 //);
 
-$conf['pt-slave-find'] = '';
+$conf['pt-slave-find'] = '/usr/bin/pt-slave-find';
 
 $conf['mysqldiff'] = '/home/snoach/dev/outbrain/trunk/production/tools/mysql-utilities/mysqldiff --difftype=sql --force --changes-for=server2 --skip-table-options ';
 

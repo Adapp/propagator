@@ -183,6 +183,7 @@ class Propagator {
     	$data['has_credentials'] = $this->has_credentials();
 
     	$data["last_script"] = $this->data_model->get_last_propagate_script_for_submitter($this->get_auth_user());
+        
     	// At this point we wish to set some reasonable default for database-role and schema-name.
     	// We begin with checking whether the current user has any sort of deployment history
     	if (empty($data["last_script"])) {
@@ -226,15 +227,11 @@ class Propagator {
     	$data['deployment_environments'] = get_var('deployment_environment');
     	$data['database_role_id'] = get_var('database_role_id');
     	$data['script_default_schema'] = get_var('script_default_schema');
-
-        // Really bad fix to remove escape chars
-        // We don't know where they are getting injected yet
     	$data['script_sql_code'] = preg_replace('/\\\\/','',get_var('script_sql_code'));
     	$data['script_description'] = get_var('script_description');
-    
     	try
     	{
-    		$propagate_script_id = $this->data_model->submit_script_for_propagation($data['script_sql_code'], $data['script_description'], $data['database_role_id'], $data['deployment_environments'], $data['script_default_schema'], $this->get_auth_user(), $this->get_credentials());
+            $propagate_script_id = $this->data_model->submit_script_for_propagation($data['script_sql_code'], $data['script_description'], $data['database_role_id'], $data['deployment_environments'], $data['script_default_schema'], $this->get_auth_user(), $this->get_credentials());
     		$data["propagate_script_id"] = $propagate_script_id;
     
     		$this->notify_listeners("new_script", array(
@@ -354,6 +351,7 @@ class Propagator {
    		    $data['database_roles'] = $this->data_model->get_database_roles();
    			$this->alert($e->getMessage(), 'alert-error');
    			prettyprint($data['script_sql_code']);
+            echo $data['script_sql_code'];
    			$this->load->view("input_script", $data);
    			$this->footer();
    			return;

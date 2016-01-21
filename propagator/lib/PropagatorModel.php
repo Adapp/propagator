@@ -63,14 +63,13 @@ class PropagatorModel {
     }
     
     function submit_script_for_propagation($script_sql_code, $script_description, $database_role, $deployment_environments, $default_schema, $auth_user, $credentials) {
-    	$script_sql_code = trim($script_sql_code);
+        $script_sql_code = trim($script_sql_code);
         if (empty($database_role)) {
     		throw new Exception("Got empty database role");
     	}
     	if (!in_array($database_role, $this->get_database_role_ids())) {
     		throw new Exception("Unknown database role: " . $database_role);
     	}
-    	
     	$queries = parse_script_queries($script_sql_code);
     	if (empty($queries)) {
     		throw new Exception("No queries found in script");
@@ -79,7 +78,7 @@ class PropagatorModel {
     	if (empty($script_description)) {
     		throw new Exception("Description is mandatory");
     	}
-    	 
+    	
     	$propagate_script_id = $this->get_database()->insert("propagate_script", array(
     			"submitted_by" => $auth_user,
     			"database_role_id" => $database_role,
