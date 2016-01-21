@@ -247,7 +247,8 @@ function split_text($input_text, $delimiters, $quoting_characters, $trim_tokens 
 
 
 function parse_script_queries($sql) {
-	$queries = split_text($sql, array(';'), array("'", "`"));
+    $sql = preg_replace("/\\\\/",'',$sql);
+	$queries = split_text($sql, array(';'), array("'","`"));
 	$queries = array_map("trim", $queries);
 	$queries = array_filter($queries);
 	$queries = array_merge($queries); // condense the indexes
@@ -325,7 +326,7 @@ function cleanup_query($sql) {
 	// compress spaces: this is dangerous because it will do same for strings
 	$sql = preg_replace('/[\s]+/', ' ', $sql);
 	
-	$sql = trim($sql);
+	//$sql = trim($sql);
 	return $sql;
 }
 
@@ -366,7 +367,7 @@ function parse_schema_name($fully_qualified_object_name) {
  * @return multitype: multitype:string <> Ambigous <NULL>
  */
 function parse_query($sql) {
-	$sql = cleanup_query($sql);
+    $sql = cleanup_query($sql);
 	if (empty($sql))
 		throw new Exception("Empty query found");
 

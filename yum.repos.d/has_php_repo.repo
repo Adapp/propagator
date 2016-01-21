@@ -1,0 +1,6 @@
+# Has-PHP repo
+[has_php]
+name=CentOS-\$releasever - Has PHP
+baseurl=http://utility.sea1.office.priv/yum/has_php_5.3/centos6_64
+gpgcheck=0
+

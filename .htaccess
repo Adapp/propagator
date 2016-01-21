@@ -1,0 +1,4 @@
+AuthName "Restricted area"
+AuthType Basic
+AuthBasicProvider ldap
+AuthLDAPURL "ldap://o-tunead01-2b.tune.priv:636/ou=TUNE,dc=priv"
